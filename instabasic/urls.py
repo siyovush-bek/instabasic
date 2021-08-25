@@ -22,6 +22,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     
+    # Posts
+    path('posts/', include('posts.urls')),
+
     # User management
     path('', include('django.contrib.auth.urls')),
     path('', include('users.urls')),

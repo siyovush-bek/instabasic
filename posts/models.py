@@ -1,7 +1,7 @@
 from users.models import CustomUser
 from uuid import uuid4
 from django.db import models
-
+from django.urls import reverse
 
 class Post(models.Model):
     id = models.UUIDField(
@@ -15,3 +15,6 @@ class Post(models.Model):
 
     def __str__(self):
         return f'Post {self.image.name} by {self.author.username}'
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id),])
