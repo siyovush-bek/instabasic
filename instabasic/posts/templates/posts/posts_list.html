@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-
 {% block title %}Posts{% endblock %}
-
 {% block content %}
+<div class="row">
 {% for post in object_list %}
-<div>
+<div class="col-4 text-center p-3">
     <a href="{{ post.get_absolute_url }}">
-        <img src="{{ post.image.url }}" alt="{{post.image.name}}">
+        <img class="img-fluid" src="{{ post.image.url }}" alt="{{post.image.name}}">
     </a>
 </div>
 {% endfor %}
+</div>
 {% endblock %}

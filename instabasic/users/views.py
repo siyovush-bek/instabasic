@@ -1,13 +1,36 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.http import request
+from django.http.response import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.views.generic import UpdateView
 
-from .forms import CustomUserCreationForm
-
+from .forms import CustomUserCreationForm, CustomUserUpdateForm
+from .models import CustomUser
+from posts.models import Post
 
 @login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+def profile(request, pk=None):
+    if pk is None:
+        pk = request.user.id
+    user = get_object_or_404(CustomUser, id=pk)
+    posts = Post.objects.filter(author=user)
+    return render(request, 'users/profile.html', {'user':user, 'posts':posts})
+
+
+class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = CustomUser
+    fields = ('username', 'email', 'image',)
+    template_name = 'users/update.html'
+
+    def test_func(self):
+        user = self.get_object()
+        if self.request.user == user:
+            return True
+        return False
+
 
 def signup(request):
     if request.method == 'POST':

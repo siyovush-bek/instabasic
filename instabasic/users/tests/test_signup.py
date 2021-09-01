@@ -42,3 +42,5 @@ class UserCreationTest(TestCase):
             '/signup/', data=data
         )
         self.assertRedirects(response, reverse('login'))
+        response = self.client.login(username=data['username'], password=data['password1'])
+        self.assertTrue(response)

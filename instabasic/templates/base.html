@@ -20,7 +20,7 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">InstaBasic</a>
+      <a class="navbar-brand" href="{% url 'posts_list' %}">InstaBasic</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,8 +28,13 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'posts_list' %}">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'posts_list' %}">Discover<span class="sr-only">(current)</span></a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'posts_create' %}">Publish</a>
+          </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav">
         {% if user.is_authenticated %}
@@ -37,7 +42,7 @@
             <a class="nav-link" href="">Create Post</a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-link" href="{{ user.get_absolute_url }}">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Log Out</a>

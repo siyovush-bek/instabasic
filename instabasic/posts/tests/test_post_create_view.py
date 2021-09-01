@@ -32,3 +32,6 @@ class CreatePostView(TestCase):
         # form = response.context.get('form')
         # self.assertIsInstance(form, CreatePostForm)
         self.assertContains(response, 'csrfmiddlewaretoken')
+    
+    def tearDown(self):
+        self.client.logout()

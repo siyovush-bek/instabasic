@@ -3,6 +3,20 @@
 {{ user.username }}
 {% endblock %}
 {% block content %}
+<div>
 <h1>Hi, {{ user.username }}!</h1>
 <img src="{{user.image.url}}" alt="profile-image" />
+</div>
+<div>
+    <h2>Posts</h2>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-4 text-center p-3">
+            <a href="{{ post.get_absolute_url }}">
+                <img class="img-fluid" src="{{ post.image.url }}" alt="{{post.image.name}}">
+            </a>
+        </div>
+        {% endfor %}
+        </div>
+</div>
 {% endblock %}
