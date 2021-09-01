@@ -3,9 +3,12 @@
 
 {% block content %}
 <div>
-    <img src="{{ object.image.url }}" alt="object.image.name">
-    <p>
+    <img src="{{ object.image.url }}" class="img-fluid" alt="object.image.name">
+    <h3>
         {{ object.description }}
+    </h3>
+    <p class="text-muted">
+        {{ object.date_posted }}
     </p>
 </div>
 {% endblock %}

@@ -30,7 +30,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'posts_list' %}">Home <span class="sr-only">(current)</span></a>
           </li>
-          {% if user.is_authenticated %}
+        </ul>
+        <ul class="navbar-nav">
+        {% if user.is_authenticated %}
           <!-- <li class="nav-item">
             <a class="nav-link" href="">Create Post</a>
           </li> -->

@@ -2,6 +2,8 @@ from users.models import CustomUser
 from uuid import uuid4
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
 
 class Post(models.Model):
     id = models.UUIDField(
@@ -11,6 +13,7 @@ class Post(models.Model):
     )
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(null=False, blank=False, upload_to='posts')
+    date_posted = models.DateTimeField(default=timezone.now)
     description = models.CharField(max_length=250, blank=True, default='')
 
     def __str__(self):
