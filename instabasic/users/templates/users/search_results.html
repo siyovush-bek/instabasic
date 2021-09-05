@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+<h2 class="text-center">Search results</h2>
+{% for user_item in user_list %}
+    <div>
+        <h3><a href="{{ user_item.get_absolute_url }}">{{ user_item.username }}</a></h3>
+    </div>
+{% endfor %}
+{% endblock content %}

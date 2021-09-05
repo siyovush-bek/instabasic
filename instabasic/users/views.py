@@ -1,13 +1,11 @@
-from django.contrib.auth.models import User
-from django.http import request
-from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.views.generic import UpdateView
+from django.contrib.postgres.search import TrigramSimilarity
+from django.views.generic import UpdateView, ListView
 
-from .forms import CustomUserCreationForm, CustomUserUpdateForm
+from .forms import CustomUserCreationForm
 from .models import CustomUser
 from posts.models import Post
 
@@ -43,3 +41,16 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/signup.html', {'form': form})
+
+
+class SearchResultListView(ListView):
+    model = CustomUser
+    context_object_name = 'user_list'
+    template_name = 'users/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        results = CustomUser.objects.annotate(
+                similarity=TrigramSimilarity('username', query),
+                ).filter(similarity__gt=0.1).order_by('-similarity')
+        return results
