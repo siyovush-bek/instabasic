@@ -13,9 +13,9 @@ from posts.models import Post
 def profile(request, pk=None):
     if pk is None:
         pk = request.user.id
-    user = get_object_or_404(CustomUser, id=pk)
-    posts = Post.objects.filter(author=user)
-    return render(request, 'users/profile.html', {'user':user, 'posts':posts})
+    user_object = get_object_or_404(CustomUser, id=pk)
+    posts = Post.objects.filter(author=user_object)
+    return render(request, 'users/profile.html', {'user_object':user_object, 'posts':posts})
 
 
 class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

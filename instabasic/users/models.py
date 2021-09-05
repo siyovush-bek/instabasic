@@ -1,3 +1,4 @@
+from posts.models import Post
 from PIL import Image
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -7,8 +8,8 @@ from django.urls import reverse
 class CustomUser(AbstractUser):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)
 
@@ -19,3 +20,5 @@ class CustomUser(AbstractUser):
     
     def get_absolute_url(self):
         return reverse('profile', args=[self.id])
+
+

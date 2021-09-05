@@ -15,6 +15,7 @@ from .models import Post
 class PostsListView(ListView):
     model = Post
     template_name = 'posts/posts_list.html'
+    paginate_by = 16
 
 
 class PostDetailView(DetailView):

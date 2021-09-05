@@ -2,9 +2,15 @@
 {% block title %}Search{% endblock title %}
 {% block content %}
 <h2 class="text-center">Search results</h2>
+{% if user_list %}
 {% for user_item in user_list %}
     <div>
         <h3><a href="{{ user_item.get_absolute_url }}">{{ user_item.username }}</a></h3>
     </div>
 {% endfor %}
+{% else %}
+<div>
+    <h4>No results were found</h4>
+</div>
+{% endif %}
 {% endblock content %}
